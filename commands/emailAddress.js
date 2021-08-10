@@ -3,25 +3,49 @@ const colors = require("colors");
 const EmailManager = require("../lib/EmailManager");
 
 const emailAddress = {
-  async set() {
+  async recipients() {
     const emailManager = new EmailManager();
-    const totalRecipients = await inquirer.prompt([
-      {
-        type: "inpit",
-        name: "totalRecipients",
-        message: "how many recipients?".green,
-      },
-    ]);
 
     const input = await inquirer.prompt([
       {
         type: "input",
-        name: "email",
-        message: "enter recipient".green,
+        name: "recipient",
+        message: "enter recipients".green,
+      },
+      {
+        type: "input",
+        name: "subject",
+        message: "enter email subject".green,
       },
     ]);
 
-    const emailAddress = emailManager.setEmailAddress(input.emailAddress);
+    // set input in email manager...
+    emailManager.setRecipient(input.recipient);
+    emailManager.setSubject(input.subject);
+
+    // print...
+    console.log("Confirm Details...".yellow);
+    console.log("Recipient: ".grey + emailManager.getRecipient());
+    console.log("Subject: ".grey + emailManager.getSubject());
+
+    const confirm = await inquirer.prompt([
+      {
+        type: "input",
+        name: "confirm",
+        message: "confirm? (y/n):".green,
+      },
+    ]);
+
+    if (confirm.confirm === "y") {
+      console.log("email sent!".yellow);
+      return;
+    }
+
+    console.log("cancelled.".red);
+  },
+
+  async subject() {
+    console.log("subject");
   },
 
   async read() {
