@@ -5,15 +5,27 @@ const EmailManager = require("../lib/EmailManager");
 const emailAddress = {
   async set() {
     const emailManager = new EmailManager();
+    const totalRecipients = await inquirer.prompt([
+      {
+        type: "inpit",
+        name: "totalRecipients",
+        message: "how many recipients?".green,
+      },
+    ]);
+
     const input = await inquirer.prompt([
       {
         type: "input",
         name: "email",
-        message: "Enter email address".green,
+        message: "enter recipient".green,
       },
     ]);
 
     const emailAddress = emailManager.setEmailAddress(input.emailAddress);
+  },
+
+  async read() {
+    console.log("Read functionality not available yet.".red);
   },
 };
 
