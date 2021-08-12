@@ -6,4 +6,5 @@ program
   .version(pkg.version)
   .command("send", "Send Email")
   .command("read", "Read Emails")
+  .command("reply", "Reply")
   .parse(process.argv);
